@@ -3,20 +3,20 @@ import { logErrInfoMsg } from "../../utils/console/log.js";
 const userSchema = Joi.object({
     name: Joi.string().min(3).max(30).required(),
     email: Joi.string().email().required(),
-    age: Joi.number().min(12).max(70),
     password: Joi.string().pattern(new RegExp("^[a-zA-Z0-9]{3,30}$")).required(),
-    repassword: Joi.ref('password'),
 });
 export const userValidation = (req, res, next) => {
-    const { name, email, age, password, repassword } = req.body;
-    const errorMsgArray = [];
-    const { error } = userSchema.validate({ name, email, age, password, repassword }, { abortEarly: false });
+    const { name, email, password } = req.body;
+    const { error } = userSchema.validate({ name, email, password }, { abortEarly: false });
     if (error) {
-        error.details.map((err) => {
-            errorMsgArray.push(err.message);
+        const errorMsgArray = [];
+        error.details.forEach((err) => {
+            errorMsgArray.push({ path: err.path, message: err.message });
         });
         logErrInfoMsg(errorMsgArray);
-        res.json(errorMsgArray);
+        req.flash('errors', errorMsgArray);
+        req.flash('oldInputs', req.body);
+        res.redirect('/register');
     }
     else {
         next();

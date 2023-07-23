@@ -3,11 +3,21 @@ import { userModel } from "../../models/user.model.js";
 import jwt from "jsonwebtoken";
 import { getFromEnv } from "../../utils/getFromEnv.js";
 import { catchAsyncError } from "../../utils/catchAsyncError.js";
-import { sendEmail } from "../../utils/email/sendEmail.js";
 import { AppError } from "../../utils/AppError.js";
+import { messageModel } from "../../models/message.model.js";
+export const login = catchAsyncError(async (req, res, next) => {
+    res.render('login', { isLoggedIn: req.session.isLoggedIn });
+});
 export const register = catchAsyncError(async (req, res, next) => {
-    const { name, email, password, age } = req.body;
-    const { secretKey, rounds } = getFromEnv();
+    res.render('register', {
+        isLoggedIn: req.session.isLoggedIn,
+        errors: req.flash('errors'),
+        oldInputs: req.flash('oldInputs')
+    });
+});
+export const handleRegister = catchAsyncError(async (req, res, next) => {
+    const { name, email, password } = req.body;
+    const { rounds } = getFromEnv();
     const user = await userModel.findOne({ email });
     if (user) {
         next(new AppError("Account Already Exist.", 400));
@@ -17,36 +27,47 @@ export const register = catchAsyncError(async (req, res, next) => {
             if (err) {
                 return res.json({ message: 'error when hashing password', err });
             }
-            await userModel.insertMany({ name, email, password: hash, age });
-            const token = jwt.sign({ email }, secretKey);
-            sendEmail({ userEmail: email, token, subject: "Verification From Sara7a App" });
-            res.json({ message: "Success" });
+            await userModel.insertMany({ name, email, password: hash });
         });
     }
+    res.redirect('/login');
 });
-export const signIn = catchAsyncError(async (req, res, next) => {
+export const handleLogin = catchAsyncError(async (req, res, next) => {
     const { email, password } = req.body;
-    const { secretKey } = getFromEnv();
     const user = await userModel.findOne({ email });
     if (user) {
         const match = await bcrypt.compare(password, user?.password);
-        const { _id: userId, name, emailConfirm } = user;
+        const { _id: userId, name } = user;
         if (match) {
-            const token = jwt.sign({ userId, name, emailConfirm }, secretKey);
-            if (emailConfirm) {
-                res.json({ message: "Login Ok", token });
-            }
-            else {
-                res.json({ message: 'Confirm Your Email First' });
-            }
+            req.session.userID = userId;
+            req.session.name = name;
+            req.session.isLoggedIn = true;
+            res.redirect('/messages');
         }
         else {
-            res.json({ message: 'Password Incorrect' });
+            res.redirect('/login');
         }
     }
     else {
-        res.json({ message: "account Not Found" });
+        res.redirect('/login');
     }
+});
+export const getUser = catchAsyncError(async (req, res) => {
+    const userID = req.params.id;
+    const user = await userModel.findOne({ _id: userID });
+    req.flash('userID', userID);
+    if (user) {
+        res.render('user', { name: user.name, isLoggedIn: req.session.isLoggedIn });
+    }
+    else {
+        res.send("User Not Found");
+    }
+});
+export const sendMessage = catchAsyncError(async (req, res) => {
+    const { message } = req.body;
+    const userID = req.flash('userID');
+    await messageModel.insertMany({ message, userID });
+    res.redirect('/user/' + userID);
 });
 export const emailVerfiy = catchAsyncError(async (req, res) => {
     const { token } = req.params;

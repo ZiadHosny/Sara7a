@@ -1,12 +1,13 @@
 import { catchAsyncError } from "../../utils/catchAsyncError.js";
-import { MessageModel } from "../../models/message.model.js";
-export const addMessage = catchAsyncError(async (req, res) => {
-    const { message, userId } = req.body;
-    await MessageModel.insertMany({ message, userId });
-    res.json({ message: 'Added Successfully' });
-});
+import { messageModel } from "../../models/message.model.js";
 export const allMessage = catchAsyncError(async (req, res) => {
-    const { userId } = req.body;
-    const messages = await MessageModel.find({ userId }, { message: 1, _id: 0 });
-    res.json({ message: 'success', messages });
+    const fullURL = req.protocol + '://' + req.headers.host + '/user/' + req.session.userID;
+    if (req.session.isLoggedIn) {
+        const messages = await messageModel.find({ userID: req.session.userID });
+        console.log(messages);
+        res.render('messages', { messages, name: req.session.name, fullURL, isLoggedIn: req.session.isLoggedIn });
+    }
+    else {
+        res.redirect('/login');
+    }
 });

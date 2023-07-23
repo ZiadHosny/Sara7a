@@ -1,5 +1,7 @@
 import { Schema, SchemaTypes, model } from "mongoose";
-const messageSchema = new Schema({
+import { Message } from "../utils/types.js";
+
+const messageSchema = new Schema<Message>({
     message: {
         type: String,
         required: true
@@ -7,5 +9,7 @@ const messageSchema = new Schema({
     userID: SchemaTypes.ObjectId
 }, {
     timestamps: true
-});
-export const messageModel = model('message', messageSchema);
+})
+
+
+export const messageModel = model('message', messageSchema)

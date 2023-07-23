@@ -1,10 +1,12 @@
+import { Types } from "mongoose";
+
 declare module 'express-session' {
     interface SessionData {
         isLoggedIn: boolean;
+        userID: Types.ObjectId;
+        name: string
     }
 }
-
-
 
 export type User = {
     name: string,
@@ -26,5 +28,5 @@ export type EmailHtml = {
 
 export type Message = {
     message: string,
-    userId: string,
+    userID: string,
 }
