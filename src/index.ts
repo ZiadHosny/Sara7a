@@ -34,9 +34,8 @@ app.use(session({
 app.use(flash())
 
 app.set('view engine', 'ejs')
-app.set('views', './src/views')
 
-app.use(express.static(path.resolve() + '/src/public'));
+app.use(express.static(path.resolve() + '/public'));
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', userRouter)
