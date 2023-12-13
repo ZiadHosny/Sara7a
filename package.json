@@ -17,6 +17,9 @@
     "build-backend": "cd backend && rimraf dist && tsc",
     "build-frontend": "cd frontend && npm run build"
   },
+  "pre-commit": [
+    "ts.check"
+  ],
   "dependencies": {
     "bcrypt": "^5.1.0",
     "connect-flash": "^0.1.1",
