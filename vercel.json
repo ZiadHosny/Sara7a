@@ -8,8 +8,8 @@
             "config": {
                 "includeFiles": [
                     "dist/**",
-                    "views",
-                    "public"
+                    "dist/views",
+                    "dist/public"
                 ]
             }
         }
