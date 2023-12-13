@@ -4,19 +4,21 @@
   "description": "",
   "author": "",
   "license": "ISC",
-  "main": "index.ts",
+  "main": "backend/index.ts",
   "type": "module",
   "scripts": {
-    "start": "ts-node --esm dist/index.js",
-    "dev": "nodemon --esm src/index.ts",
+    "start": "ts-node --esm backend/dist/index.js",
+    "server": "nodemon --esm backend/src/index.ts",
+    "client": "npm start --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build": "git add dist",
-    "build": "rimraf dist && tsc"
+    "add-dist": "cd backend && git add dist",
+    "add-build": "cd frontend && git add build",
+    "build-backend": "cd backend && rimraf dist && tsc",
+    "build-frontend": "cd frontend && npm run build"
   },
   "pre-commit": [
-    "ts.check",
-    "build",
-    "add-build"
+    "ts.check"
   ],
   "dependencies": {
     "bcrypt": "^5.1.0",
@@ -41,7 +43,6 @@
     "@types/express-session": "^1.17.7",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.3.1",
-    "@types/nodemailer": "^6.4.8",
     "chalk": "^5.3.0",
     "nodemon": "^2.0.22",
     "pre-commit": "^1.2.2",
