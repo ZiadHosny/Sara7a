@@ -12,6 +12,7 @@ export const getFromEnv = () => {
     const email = process.env.EMAIL
     const pass = process.env.PASS
     const emailService = process.env.EMAIL_SERVICE
+    const mode = process.env.MODE
 
     const mongoDBUrl = process.env.MONOGO_DB_URL || ''
 
@@ -31,7 +32,8 @@ export const getFromEnv = () => {
         mongoDBUrl,
         secretKey,
         rounds,
-        from
+        from,
+        mode
     }
 
 }

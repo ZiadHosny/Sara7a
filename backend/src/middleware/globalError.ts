@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express"
-
-const mode = 'prod'
+import { getFromEnv } from "../utils/getFromEnv.js"
 
 export const globalError = (err: any, _: Request, res: Response, __: NextFunction) => {
+    const { mode } = getFromEnv()
     if (mode == 'prod') {
         prodMode(err, res)
     } else {
