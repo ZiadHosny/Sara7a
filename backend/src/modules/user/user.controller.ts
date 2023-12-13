@@ -43,15 +43,15 @@ export const signIn = catchAsyncError(async (req: Request, res: Response, next: 
             if (emailConfirm) {
                 res.json({ message: "Login Ok", token })
             } else {
-                res.json({ message: 'Confirm Your Email First' })
+                next(new AppError("Confirm Your Email First", 400))
             }
 
         }
         else {
-            res.json({ message: 'Password Incorrect' })
+            next(new AppError("Password Incorrect", 400))
         }
     } else {
-        res.json({ message: "account Not Found" })
+        next(new AppError("account Not Found", 400))
     }
 
 })

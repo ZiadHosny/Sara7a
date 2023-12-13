@@ -27,10 +27,10 @@ export const Register = () => {
 
   let formik = useFormik({
     initialValues: {
-      name: 'ziad',
-      email: 'ziadhosny007@gmail.com',
-      password: '12345678z',
-      rePassword: '12345678z',
+      name: '',
+      email: '',
+      password: '',
+      rePassword: '',
     },
     validationSchema: registerValidationSchema,
     onSubmit: (values) => {
