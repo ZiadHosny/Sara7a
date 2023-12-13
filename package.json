@@ -18,7 +18,8 @@
     "build-frontend": "cd frontend && npm run build"
   },
   "pre-commit": [
-    "build-frontend"
+    "build-frontend",
+    "add-build"
   ],
   "dependencies": {
     "bcrypt": "^5.1.0",
