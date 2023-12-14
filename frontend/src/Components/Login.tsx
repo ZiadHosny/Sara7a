@@ -16,7 +16,7 @@ export const Login = () => {
     setIsLoading(true);
     try {
       let { data } = await axios.post(signInUrl, values);
-      console.log(data)
+
       if (data.token) {
         setApiError("")
         setIsLoading(false);
@@ -25,8 +25,8 @@ export const Login = () => {
         navigate('/profile')
       }
     } catch (error: any) {
+
       setApiError(error.response.data.error);
-      console.log(error.response.data.error);
       setIsLoading(false);
     }
   };

@@ -8,7 +8,7 @@ import { logBlueMsg, logErrMsg } from "./src/utils/console/log.js"
 import baseRouter from "./src/modules/baseRouter.js"
 import invalidRouter from "./src/modules/invalidRouter.js"
 import { globalError } from "./src/middleware/globalError.js"
-import path from "path"
+import * as path from "path"
 
 const { port, mode } = getFromEnv()
 

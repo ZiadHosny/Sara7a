@@ -7,17 +7,27 @@
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
-                    "dist/**",
-                    "dist/views",
-                    "dist/public"
+                    "dist/**"
                 ]
             }
+        },
+        {
+            "src": "./frontend/build/**",
+            "use": "@vercel/static"
         }
     ],
     "routes": [
         {
             "src": "/(.*)",
             "dest": "/dist/index.js"
+        },
+        {
+            "src": "/",
+            "dest": "frontend/build/index.html"
+        },
+        {
+            "src": "/(.+)",
+            "dest": "frontend/build/$1"
         }
     ]
 }

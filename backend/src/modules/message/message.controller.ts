@@ -15,8 +15,6 @@ export const allMessage = catchAsyncError(async (req: Request, res: Response) =>
 
     const { userId } = req.body;
 
-    console.log(userId)
-
     const messages = await MessageModel.find({ userId }, { message: 1, _id: 0 })
 
     res.json({ message: 'success', messages })

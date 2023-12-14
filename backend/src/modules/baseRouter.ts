@@ -1,8 +1,8 @@
-import express, { Response } from "express";
+import * as express from "express";
 
 const baseRouter = express.Router()
 
-baseRouter.get('/', (_, res: Response) => {
+baseRouter.get('/', (_, res: express.Response) => {
     res.send('Hello From Sara7a Api!')
 })
 

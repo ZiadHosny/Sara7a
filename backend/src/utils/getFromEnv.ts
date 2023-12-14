@@ -1,4 +1,4 @@
-import dotenv from 'dotenv'
+import * as dotenv from 'dotenv'
 
 export const getFromEnv = () => {
 
@@ -14,7 +14,7 @@ export const getFromEnv = () => {
     const emailService = process.env.EMAIL_SERVICE
     const mode = process.env.MODE
 
-    const mongoDBUrl = process.env.MONOGO_DB_URL || ''
+    const mongoDBUrl = process.env.MONGO_DB_URL || ''
 
     const secretKey = process.env.SECRET_KEY || ''
     const rounds = Number(process.env.ROUNDS) || 8

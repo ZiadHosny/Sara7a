@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express"
-import bcrypt from 'bcrypt'
+import * as bcrypt from 'bcrypt'
 import { userModel } from "../../models/user.model.js"
-import jwt from "jsonwebtoken"
+import * as jwt from "jsonwebtoken"
 import { getFromEnv } from "../../utils/getFromEnv.js"
 import { catchAsyncError } from "../../utils/catchAsyncError.js"
 import { sendEmail } from "../../utils/email/sendEmail.js"

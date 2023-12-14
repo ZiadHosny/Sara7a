@@ -18,16 +18,16 @@ export const SendMessage = () => {
       let data = {
         ...values
       }
-      console.log('sent data is ', data)
+
       let res = await axios.post(messagesUrl, data)
-      console.log(res)
+
       setApiError('')
       setApiSuccess(res.data.messaged)
       setTimeout(() => {
         setApiSuccess("")
       }, 2000);
     } catch (error: any) {
-      console.log(error.response.data.error)
+
       setApiError(error.response.data.error)
       setApiSuccess("")
       setTimeout(() => {

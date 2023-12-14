@@ -9,7 +9,7 @@ import { messagesUrl } from '../constants/URLS';
 
 const getMessages = async () => {
   let { data } = await axios.get(messagesUrl, { headers: { token: localStorage.getItem('userToken') } })
-  console.log(data.messages)
+
   return data.messages
 }
 

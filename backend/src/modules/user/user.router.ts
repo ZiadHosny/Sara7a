@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import { emailVerify, signIn, signUp } from "./user.controller.js";
 import { userValidation } from "../../middleware/validation/user.validation.js";
 
