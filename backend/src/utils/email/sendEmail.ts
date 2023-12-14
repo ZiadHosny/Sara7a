@@ -4,7 +4,7 @@ import { EmailData } from '../types.js';
 import { emailHtml } from './emailHtml.js';
 import { logErrInfoMsg, logSuccessMsg } from '../console/log.js';
 
-export const sendEmail = ({ userEmail, token, subject }: EmailData) => {
+export const sendEmail = async ({ userEmail, token, subject }: EmailData) => {
 
     const { user, email, pass, emailService } = getFromEnv()
 
@@ -16,17 +16,29 @@ export const sendEmail = ({ userEmail, token, subject }: EmailData) => {
         }
     });
 
-    transporter.sendMail({
-        from: `"${user}" <${email}>`,
-        to: userEmail,
-        subject,
-        html: emailHtml({ token }),
-    }, (err, info) => {
+    let mailMessage = 'Message Not Sended Successfully'
 
-        if (err) {
-            logErrInfoMsg(err);
-        } else {
-            logSuccessMsg('Message Sended Successfully ' + info.accepted);
-        }
-    });
+    await new Promise((resolve, reject) => {
+        transporter.sendMail({
+            from: `"${user}" <${email}>`,
+            to: userEmail,
+            subject,
+            html: emailHtml({ token }),
+        }, (err, info) => {
+
+            if (err) {
+                logErrInfoMsg(err);
+                reject({
+                    mailMessage,
+                    err
+                })
+            } else {
+                mailMessage = 'Message Sended Successfully ' + info.accepted
+                logSuccessMsg(mailMessage);
+                resolve(mailMessage)
+            }
+        });
+    })
+
+    return mailMessage
 }

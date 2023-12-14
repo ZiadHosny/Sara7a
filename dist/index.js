@@ -22,11 +22,6 @@ if (mode === 'prod') {
     app.use(express.static(path.join(__dirname, '/frontend/build')));
     app.get('*', (req, res) => res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html')));
 }
-else {
-    app.get('/', (req, res) => {
-        res.send('API is running....');
-    });
-}
 app.use('*', invalidRouter);
 app.use(globalError);
 app.listen(port, () => logBlueMsg(`Sara7a Api listening on port ${port}!`));

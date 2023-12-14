@@ -41,6 +41,7 @@
     "@types/node": "^20.3.1",
     "@types/nodemailer": "^6.4.14",
     "chalk": "^5.3.0",
+    "concurrently": "^8.2.2",
     "nodemon": "^2.0.22",
     "pre-commit": "^1.2.2",
     "rimraf": "^5.0.1",

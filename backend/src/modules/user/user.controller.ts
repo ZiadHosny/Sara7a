@@ -20,8 +20,9 @@ export const signUp = catchAsyncError(async (req: Request, res: Response, next: 
             }
             await userModel.insertMany({ name, email, password: hash })
             const token = jwt.sign({ email }, secretKey)
-            sendEmail({ userEmail: email, token, subject: "Verification From Sara7a App" })
-            res.json({ message: "Success" })
+            const emailMessage = await sendEmail({ userEmail: email, token, subject: "Verification From Sara7a App" })
+
+            res.json({ message: "Success" , emailMessage})
         })
     }
 })
