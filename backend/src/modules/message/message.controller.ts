@@ -3,7 +3,7 @@ import { catchAsyncError } from "../../utils/catchAsyncError.js";
 import { MessageModel } from "../../models/message.model.js";
 
 export const addMessage = catchAsyncError(async (req: Request, res: Response) => {
-    
+
     const { message, userId } = req.body
 
     await MessageModel.insertMany({ message, userId })

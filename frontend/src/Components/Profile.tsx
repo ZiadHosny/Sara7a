@@ -19,12 +19,16 @@ export const Profile = () => {
   const handleShow = () => setShow(true);
   const [userID, setUserID] = useState("");
 
+  const messageURl = window.location.port ?
+    `${window.location.hostname}:${window.location.port}/message` :
+    `${window.location.hostname}/message`
+
+
 
   const { data, isLoading } = useQuery(
     ["messages", localStorage.getItem("userToken")],
     () => getMessages()
   );
-
 
   const getUserID = () => {
 
@@ -52,13 +56,16 @@ export const Profile = () => {
           </a>
           <h3 className="py-2">Profile name</h3>
 
-          {isLoading
+          {data && data.length === 0
             ? <p>There is no messages!</p>
-            : data.map((message: any, index: number) => (
+            : data ? data.map((message: any, index: number) => (
               <div className="card text-center my-3 mb-3" key={index}>
                 <div className="card-body"><div key={index}>{message.message}</div></div>
-              </div>
-            ))}
+              </div>))
+              :
+              <></>
+          }
+
         </div>
 
 
@@ -67,7 +74,7 @@ export const Profile = () => {
           <Modal.Header closeButton>
             <Modal.Title>Share link with your friends</Modal.Title>
           </Modal.Header>
-          <Modal.Body>{userID ? `${window.location.hostname}:${window.location.port}/message/${userID}` : ""}</Modal.Body>
+          <Modal.Body>{userID ? `${messageURl}/${userID}` : ""}</Modal.Body>
           <Modal.Footer>
             <Button variant="btn btn-default-outline" onClick={handleClose}>
               Close
