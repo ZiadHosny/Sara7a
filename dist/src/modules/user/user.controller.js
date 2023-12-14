@@ -1,6 +1,6 @@
 import * as bcrypt from 'bcrypt';
 import { userModel } from "../../models/user.model.js";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { getFromEnv } from "../../utils/getFromEnv.js";
 import { catchAsyncError } from "../../utils/catchAsyncError.js";
 import { sendEmail } from "../../utils/email/sendEmail.js";

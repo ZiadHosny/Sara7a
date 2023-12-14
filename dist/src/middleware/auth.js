@@ -1,4 +1,4 @@
-import * as jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { getFromEnv } from '../utils/getFromEnv.js';
 export const auth = (req, res, next) => {
     const { secretKey } = getFromEnv();

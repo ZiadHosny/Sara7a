@@ -5,7 +5,6 @@ export const getFromEnv = () => {
     dotenv.config()
 
     const port = Number(process.env.PORT) || 3000
-    const baseUrl = process.env.BASE_URL || ''
     const baseUrlWithPort = process.env.BASE_URL_WITH_PORT
 
     const user = process.env.USER
@@ -23,7 +22,6 @@ export const getFromEnv = () => {
 
     return {
         port,
-        baseUrl,
         baseUrlWithPort,
         user,
         email,
