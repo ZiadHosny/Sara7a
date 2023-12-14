@@ -12,8 +12,8 @@
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "ts.check": "tsc --project tsconfig.json",
-    "add-build-frontend": "git add dist",
-    "add-build-backend": "cd frontend && git add build",
+    "add-build-backend": "git add dist",
+    "add-build-frontend": "cd frontend && git add build",
     "build-backend": "rimraf dist && cd backend && tsc",
     "build-frontend": "cd frontend && npm run build"
   },
